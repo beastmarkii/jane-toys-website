@@ -84,7 +84,7 @@ themeToggle.addEventListener("click", () => {
 // ===== 문의 폼 / inquiry form =====
 // INQUIRY_ENDPOINT 에 Formspree 등 폼 서비스 주소를 넣으면 메일 앱 없이 바로 전송됩니다.
 // 예: const INQUIRY_ENDPOINT = "https://formspree.io/f/xxxxxxx";
-const INQUIRY_ENDPOINT = "";
+const INQUIRY_ENDPOINT = "https://formspree.io/f/xykrrpaz";
 const INQUIRY_EMAIL = "janetoys@jane-toys.com";
 
 const inquiryForm = document.getElementById("inquiry-form");
