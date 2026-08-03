@@ -291,6 +291,9 @@ a{color:inherit;text-decoration:none}
 .inquiry-form input:focus,.inquiry-form textarea:focus{outline:none;border-color:var(--ink)}
 .form-wide{grid-column:1/-1}
 .inquiry-form button{margin-top:36px}
+.form-status{min-height:20px;margin-top:16px;font-size:13px;font-weight:400}
+.form-status[data-status="success"]{color:#27724a}
+.form-status[data-status="error"]{color:#b13a2f}
 .form-note{margin-top:18px;font-size:12.5px;color:var(--mute);font-weight:300}
 @media(max-width:640px){.form-grid{grid-template-columns:1fr}}
 

@@ -115,8 +115,8 @@ window.I18N = {
 모든 HTML이 CSS/JS를 `?v=N` 쿼리와 함께 불러옵니다.
 
 ```html
-<link rel="stylesheet" href="styles.css?v=13" />
-<script src="i18n.js?v=13"></script>
+<link rel="stylesheet" href="styles.css?v=14" />
+<script src="i18n.js?v=14"></script>
 ```
 
 **CSS나 JS를 한 글자라도 수정하면 8개 HTML 전체의 버전을 올려야 합니다.**
@@ -124,10 +124,10 @@ window.I18N = {
 (이 프로젝트에서 이 문제로 여러 번 헤맸음)
 
 ```bash
-cd WWW && sed -i 's/?v=13/?v=14/g' *.html
+cd WWW && sed -i 's/?v=14/?v=15/g' *.html
 ```
 
-**현재 버전: `v=13`**
+**현재 버전: `v=14`**
 
 ---
 
@@ -264,14 +264,14 @@ cd WWW && sed -i 's/?v=13/?v=14/g' *.html
 
 ## 11. 문의 폼 (`script.js`)
 
-현재 **mailto 방식**입니다. 제출 시 바이어의 메일 앱이 열리고 내용이 채워집니다.
+현재 Formspree 같은 폼 서비스 endpoint를 연결하면 **직접 전송 방식**으로 작동합니다. endpoint가 비어 있으면 메일 앱을 열지 않고 안내 메시지를 표시합니다.
 
 ```js
 const INQUIRY_ENDPOINT = "";   // ← 여기에 Formspree URL을 넣으면 직접 전송으로 전환
 const INQUIRY_EMAIL = "janetoys@jane-toys.com";
 ```
 
-**업그레이드 방법**: 사용자가 formspree.io 에 직접 가입 후 받은 엔드포인트(`https://formspree.io/f/xxxxxxx`)를 `INQUIRY_ENDPOINT` 에 넣기만 하면 됩니다. 코드는 이미 fetch POST → 실패 시 mailto 폴백으로 구현되어 있습니다.
+**업그레이드 방법**: 사용자가 formspree.io 에 직접 가입 후 받은 엔드포인트(`https://formspree.io/f/xxxxxxx`)를 `INQUIRY_ENDPOINT` 에 넣기만 하면 됩니다. 코드는 fetch POST로 직접 전송하며, 실패 시 화면 안에 오류 메시지를 표시합니다.
 
 > ⚠️ AI가 사용자 대신 계정을 만들면 안 됩니다. 가입은 사용자가 직접.
 
@@ -291,7 +291,7 @@ git push origin main
 
 **배포 확인**:
 ```bash
-curl -s https://beastmarkii.github.io/jane-toys-website/styles.css?v=13 | head -3
+curl -s https://beastmarkii.github.io/jane-toys-website/styles.css?v=14 | head -3
 ```
 
 ---

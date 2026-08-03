@@ -87,54 +87,57 @@ themeToggle.addEventListener("click", () => {
 const INQUIRY_ENDPOINT = "";
 const INQUIRY_EMAIL = "janetoys@jane-toys.com";
 
-function buildInquiryMailto(data, lang) {
-  const dict = window.I18N[lang] || window.I18N.zh;
-  const subject = (dict["form.subject"] || "[Inquiry]") + " " + (data.company || data.name || "");
-  const body = [
-    (dict["form.name"] || "Name") + ": " + data.name,
-    (dict["form.company"] || "Company") + ": " + data.company,
-    (dict["form.email"] || "Email") + ": " + data.email,
-    (dict["form.country"] || "Country") + ": " + (data.country || "-"),
-    (dict["form.qty"] || "Qty") + ": " + (data.qty || "-"),
-    "",
-    data.msg,
-  ].join("\n");
-  return "mailto:" + INQUIRY_EMAIL +
-    "?subject=" + encodeURIComponent(subject) +
-    "&body=" + encodeURIComponent(body);
-}
-window.buildInquiryMailto = buildInquiryMailto; // 테스트용 노출
-
 const inquiryForm = document.getElementById("inquiry-form");
 if (inquiryForm) {
+  const submitButton = inquiryForm.querySelector("button[type=submit]");
+  const statusEl = document.getElementById("form-status");
+  const defaultButtonText = submitButton ? submitButton.textContent : "";
+
+  function setFormStatus(message, type) {
+    if (!statusEl) return;
+    statusEl.textContent = message;
+    statusEl.dataset.status = type || "";
+  }
+
   inquiryForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!inquiryForm.reportValidity()) return;
     const fd = new FormData(inquiryForm);
-    const data = Object.fromEntries(fd.entries());
     const lang = (() => { try { return localStorage.getItem("lang") || "zh"; } catch (err) { return "zh"; } })();
+    fd.append("_subject", "Jane Toys website inquiry");
 
-    if (INQUIRY_ENDPOINT) {
-      // 폼 서비스로 직접 전송 / direct submission via form service
-      const btn = inquiryForm.querySelector("button[type=submit]");
-      btn.disabled = true;
-      try {
-        const res = await fetch(INQUIRY_ENDPOINT, {
-          method: "POST",
-          headers: { "Accept": "application/json", "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        if (res.ok) {
-          inquiryForm.reset();
-          btn.textContent = "✓";
-          setTimeout(() => { applyLang(lang); btn.disabled = false; }, 2500);
-          return;
-        }
-      } catch (err) { /* 실패 시 mailto 로 폴백 */ }
-      btn.disabled = false;
+    if (!INQUIRY_ENDPOINT) {
+      setFormStatus("Form service is being configured. Please email janetoys@jane-toys.com directly for now.", "error");
+      return;
     }
-    // mailto 폴백 / mailto fallback
-    window.location.href = buildInquiryMailto(data, lang);
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
+    setFormStatus("", "");
+
+    try {
+      const res = await fetch(INQUIRY_ENDPOINT, {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: fd,
+      });
+      if (res.ok) {
+        inquiryForm.reset();
+        setFormStatus("Thank you. Your inquiry has been sent.", "success");
+        return;
+      }
+      setFormStatus("The message could not be sent. Please try again or email janetoys@jane-toys.com.", "error");
+    } catch (err) {
+      setFormStatus("The message could not be sent. Please try again or email janetoys@jane-toys.com.", "error");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultButtonText || "Send Inquiry";
+        applyLang(lang);
+      }
+    }
   });
 }
 
