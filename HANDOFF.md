@@ -115,8 +115,8 @@ window.I18N = {
 모든 HTML이 CSS/JS를 `?v=N` 쿼리와 함께 불러옵니다.
 
 ```html
-<link rel="stylesheet" href="styles.css?v=15" />
-<script src="i18n.js?v=15"></script>
+<link rel="stylesheet" href="styles.css?v=16" />
+<script src="i18n.js?v=16"></script>
 ```
 
 **CSS나 JS를 한 글자라도 수정하면 8개 HTML 전체의 버전을 올려야 합니다.**
@@ -124,10 +124,10 @@ window.I18N = {
 (이 프로젝트에서 이 문제로 여러 번 헤맸음)
 
 ```bash
-cd WWW && sed -i 's/?v=15/?v=16/g' *.html
+cd WWW && sed -i 's/?v=16/?v=17/g' *.html
 ```
 
-**현재 버전: `v=15`**
+**현재 버전: `v=16`**
 
 ---
 
@@ -291,7 +291,7 @@ git push origin main
 
 **배포 확인**:
 ```bash
-curl -s https://beastmarkii.github.io/jane-toys-website/styles.css?v=15 | head -3
+curl -s https://beastmarkii.github.io/jane-toys-website/styles.css?v=16 | head -3
 ```
 
 ---
