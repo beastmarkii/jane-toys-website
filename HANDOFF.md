@@ -18,7 +18,7 @@
 | 브랜드 표기 | JANE TOYS (라틴 표기는 3개 언어 공통) |
 | 업종 | 봉제인형(毛绒公仔) · IP 굿즈 OEM 제조 |
 | 주요 거래처 | Sanrio(三丽鸥), Pop Mart(泡泡玛特) |
-| 문의 이메일 | beastmarkii@gmail.com |
+| 문의 이메일 | janetoys@jane-toys.com |
 
 **라이브**: https://beastmarkii.github.io/jane-toys-website/
 **저장소**: https://github.com/beastmarkii/jane-toys-website (public)
@@ -268,7 +268,7 @@ cd WWW && sed -i 's/?v=13/?v=14/g' *.html
 
 ```js
 const INQUIRY_ENDPOINT = "";   // ← 여기에 Formspree URL을 넣으면 직접 전송으로 전환
-const INQUIRY_EMAIL = "beastmarkii@gmail.com";
+const INQUIRY_EMAIL = "janetoys@jane-toys.com";
 ```
 
 **업그레이드 방법**: 사용자가 formspree.io 에 직접 가입 후 받은 엔드포인트(`https://formspree.io/f/xxxxxxx`)를 `INQUIRY_ENDPOINT` 에 넣기만 하면 됩니다. 코드는 이미 fetch POST → 실패 시 mailto 폴백으로 구현되어 있습니다.
